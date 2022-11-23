@@ -18,20 +18,15 @@ CHCP 65001 > nul
 
 ECHO 알약 통합에이전트 제거를 위한 작업입니다.
 ECHO Uninstall 권한이 없어 프로그램 파일과 레지스트리를 직접 제거합니다.
-:ReQ
 ECHO 제거를 진행하시겠습니까?
 CHOICE
 
 IF %errorlevel% == 1 (
-	ECHO.
+	CLS
 ) ELSE IF %errorlevel% == 2 (
-	ECHO 작업을 취소합니다.
+	COLOR 04
 	goto :Endlevel
-) ELSE (
-	goto :ReQ
 )
-
-CLS
 
 SET directory1=%ProgramFiles%\ESTsoft\ALYac
 SET directory2=%ProgramFiles%\ESTsoft\ALYacIntegrationAgent
@@ -96,6 +91,8 @@ TIMEOUT /t 1 > nul
 CLS
 
 :Endlevel
+CLS
+ECHO 작업을 종료합니다.
 BCDEDIT /deletevalue {current} safeboot
 TIMEOUT /t 3 > nul
 SHUTDOWN /r /t 2 /c "안전모드 해제 후, 다시 시작합니다." /f
