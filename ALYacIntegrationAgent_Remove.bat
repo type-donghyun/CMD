@@ -33,30 +33,51 @@ IF %errorlevel% == 1 (
 
 CLS
 
-SET directory1=C:\"Program Files"\ESTsoft\ALYac
-SET directory2=C:\"Program Files"\ESTsoft\ALYacIntegrationAgent
-SET directory3=C:\"Program Files"\ESTsoft\ASM
-SET directory4=C:\ProgramData\ESTsoft\ALYac
-SET directory5=C:\ProgramData\ESTsoft\ALYacIntegrationAgent
-SET directory6=C:\ProgramData\ESTsoft\ASM
+SET directory1=%ProgramFiles%\ESTsoft\ALYac
+SET directory2=%ProgramFiles%\ESTsoft\ALYacIntegrationAgent
+SET directory3=%ProgramFiles%\ESTsoft\ASM
+SET directory4=%ProgramData%\ESTsoft\ALYac
+SET directory5=%ProgramData%\ESTsoft\ALYacIntegrationAgent
+SET directory6=%ProgramData%\ESTsoft\ASM
+SET directory7=%ProgramData%\Microsoft\Windows\"Start menu"\Programs\이스트소프트
+REM SET directory8=del /s /q %ProgramData%\Microsoft\Windows\"Start menu"\알약.lnk
 
 ECHO 디렉토리 제거 시작
-FOR /l %%i in (1,1,6) do (
+FOR /l %%i in (1,1,7) do (
 	IF EXIST directory%%i (
-		RMDIR /s /q directory%%i
+		RD /s /q directory%%i
 		ECHO %%i번째 디렉토리를 제거
 	) ELSE (
 		ECHO %%i번째 디렉토리를 발견하지 못 함
 	)
 )
+COLOR 0A
 ECHO 디렉토리 제거 완료
 
-TIMEOUT /t 1 > nul
+TIMEOUT /t 2 > nul
 CLS
+COLOR 0F
 
-SET registry1=HKEY_LOCAL_MACHINE\SOFTWARE\ESTsoft\ALYac
-SET registry2=HKEY_LOCAL_MACHINE\SOFTWARE\ESTsoft\ALYacIntegrationAgent
-SET registry3=HKEY_LOCAL_MACHINE\SOFTWARE\ESTsoft\ASM
+SET file1=%ProgramData%\Microsoft\WIndows\"Start menu"\알약.lnk
+
+ECHO 파일 제거 시작
+FOR /l %%i in (1,1,1) do (
+	IF EXIST file%%i (
+		DEL /s /q file%%i
+		ECHO %%i번째 파일을 제거
+	) ELSE (
+		ECHO %%i번째 파일을 발견하지 못 함
+)
+COLOR 0A
+ECHO 파일 제거 완료
+
+TIMEOUT /t 2 > nul
+CLS
+COLOR 0F
+
+SET registry1=HKLM\SOFTWARE\ESTsoft\ALYac
+SET registry2=HKLM\SOFTWARE\ESTsoft\ALYacIntegrationAgent
+SET registry3=HKLM\SOFTWARE\ESTsoft\ASM
 
 ECHO 레지스트리 제거 시작
 FOR /l %%i in (1,1,3) do (
@@ -67,7 +88,12 @@ FOR /l %%i in (1,1,3) do (
 		ECHO %%i번째 레지스트리를 제거
 	)
 )
+COLOR 0A
 ECHO 레지스트리 제거 완료
+
+TIMEOUT /t 2 > nul
+CLS
+COLOR 0F
 
 :Endlevel
 BCDEDIT /deletevalue {current} safeboot
