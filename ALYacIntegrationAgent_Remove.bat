@@ -19,7 +19,7 @@ CHCP 65001 > nul
 ECHO 알약 통합에이전트 제거를 위한 작업입니다.
 ECHO Uninstall 권한이 없어 프로그램 파일과 레지스트리를 직접 제거합니다.
 :ReQ
-ECHO 제거를 진행합니다.
+ECHO 제거를 진행하시겠습니까?
 CHOICE
 
 IF %errorlevel% == 1 (
@@ -82,7 +82,7 @@ SET registry3=HKLM\SOFTWARE\ESTsoft\ASM
 ECHO 레지스트리 제거 시작
 ECHO.
 FOR /l %%i in (1,1,3) do (
-	REG QUERY registry%%i /ve /f 2> nul
+	REG DELETE registry%%i /ve /f 2> nul
 REM	IF %errorlevel%==0 (
 REM		ECHO %%i번째 레지스트리를 제거
 REM	) ELSE IF %errorlevel%==1 (
