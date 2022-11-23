@@ -40,7 +40,6 @@ SET directory4=%ProgramData%\ESTsoft\ALYac
 SET directory5=%ProgramData%\ESTsoft\ALYacIntegrationAgent
 SET directory6=%ProgramData%\ESTsoft\ASM
 SET directory7=%ProgramData%\Microsoft\Windows\"Start menu"\Programs\이스트소프트
-REM SET directory8=del /s /q %ProgramData%\Microsoft\Windows\"Start menu"\알약.lnk
 
 ECHO 디렉토리 제거 시작
 FOR /l %%i in (1,1,7) do (
