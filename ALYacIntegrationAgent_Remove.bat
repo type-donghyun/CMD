@@ -57,12 +57,12 @@ SET file1=%ProgramData%\Microsoft\Windows\"Start menu"\알약.lnk
 ECHO 파일 제거 시작
 ECHO.
 FOR /l %%i in (1,1,1) do (
-	DEL /s /q file%%i 2> nul
-REM	IF %errorlevel%==0 (
-REM		ECHO %%i번째 파일을 제거
-REM	) ELSE IF %errorlevel%==1 (
-REM		ECHO %%i번째 파일을 발견하지 못 함
-REM	)
+	IF EXIST file%%i (
+		DEL /s /q file%%i 2> nul
+		ECHO %%i번째 디렉토리를 제거
+	) ELSE (
+		ECHO %%i번째 디렉토리를 발견하지 못 함
+	)
 )
 ECHO.
 ECHO 파일 제거 완료
@@ -76,13 +76,20 @@ SET registry3=HKLM\SOFTWARE\ESTsoft\ASM
 
 ECHO 레지스트리 제거 시작
 ECHO.
-FOR /l %%i in (1,1,3) do (
-	REG DELETE registry%%i /ve /f 2> nul
-REM	IF %errorlevel%==0 (
-REM		ECHO %%i번째 레지스트리를 제거
-REM	) ELSE IF %errorlevel%==1 (
-REM		ECHO %%i번째 레지스트리를 발견하지 못 함
-REM	)
+SET /a count=0
+
+:regdel
+SET /a count += 1
+REG QUERY registry%count% /f 2> nul
+IF %errorlevel%==0 (
+	REG DELETE registry%count% /f 2> nul
+	ECHO %count%번째 레지스트리를 제거
+) ELSE IF %errorlevel%==1 (
+	ECHO %count%번째 레지스트리를 발견하지 못 함
+)
+
+IF %count% lss 3 (
+	GOTO :regdel
 )
 ECHO.
 ECHO 레지스트리 제거 완료
@@ -93,6 +100,6 @@ CLS
 :Endlevel
 CLS
 ECHO 작업을 종료합니다.
-BCDEDIT /deletevalue {current} safeboot
+BCDEDIT /deletevalue {current} safeboot > nul
 TIMEOUT /t 3 > nul
 SHUTDOWN /r /t 2 /c "안전모드 해제 후, 다시 시작합니다." /f
