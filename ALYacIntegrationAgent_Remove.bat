@@ -1,14 +1,14 @@
 @ECHO OFF
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 IF '%errorlevel%' NEQ '0' (
-	goto UACPrompt
-) ELSE (goto gotAdmin)
+	GOTO UACPrompt
+) ELSE (GOTO gotAdmin)
 :UACPrompt
 	ECHO SET UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
 	SET params = %*:"=""
 	ECHO UAC.ShellExecute "cmd.exe", "/c %~s0 %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 	"%temp%\getadmin.vbs"
-	REM del "%temp%\getadmin.vbs"
+	REM DEL "%temp%\getadmin.vbs"
 	EXIT /b
 :gotAdmin
 pushd "%CD%"
@@ -25,7 +25,7 @@ IF %errorlevel% == 1 (
 	CLS
 ) ELSE IF %errorlevel% == 2 (
 	COLOR 04
-	goto :Endlevel
+	GOTO :End
 )
 
 SET directory1 = %ProgramFiles%\ESTsoft\ALYac
@@ -97,7 +97,7 @@ ECHO 레지스트리 제거 완료
 TIMEOUT /t 1 > nul
 CLS
 
-:Endlevel
+:End
 CLS
 ECHO 작업을 종료합니다.
 BCDEDIT /deletevalue {current} safeboot > nul
