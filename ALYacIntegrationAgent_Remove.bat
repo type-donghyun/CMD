@@ -23,9 +23,9 @@ ECHO Uninstall 권한이 없어 프로그램 파일과 레지스트리를 직접
 ECHO 제거를 진행하시겠습니까?
 CHOICE
 
-IF %errorlevel% == 1 (
+IF %errorlevel% equ 1 (
 	CLS
-) ELSE IF %errorlevel% == 2 (
+) ELSE IF %errorlevel% equ 2 (
 	COLOR 04
 	GOTO End
 )
@@ -83,10 +83,10 @@ SET /a count = 0
 :regdel
 SET /a count += 1
 REG QUERY registry%count% /f 2> nul
-IF %errorlevel% == 0 (
+IF %errorlevel% equ 0 (
 	REG DELETE registry%count% /f 2> nul
 	ECHO %count%번째 레지스트리를 제거
-) ELSE IF %errorlevel% == 1 (
+) ELSE IF %errorlevel% equ 1 (
 	ECHO %count%번째 레지스트리를 발견하지 못 함
 )
 
