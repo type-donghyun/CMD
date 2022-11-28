@@ -136,7 +136,7 @@ REG DELETE HKLM\SYSTEM\ControlSet001\Services\SharedAccess\Parameters\FirewallPo
 REG DELETE HKLM\SYSTEM\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules /v {ED35D22F-A741-4444-A248-E9E999F4A7CA} /f
 REG DELETE HKLM\SYSTEM\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules /v {F14F24B5-2465-4979-B7A1-E6E0641B1620} /f
 REG DELETE HKLM\SYSTEM\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules /v {FCAAF1D2-9D12-475E-AD86-A3586CF43D60} /f
-REM	확인 필요			REG DELETE HKLM\SYSTEM\ControlSet001\Services\trufos /f
+REG DELETE HKLM\SYSTEM\ControlSet001\Services\trufos /f
 REG DELETE HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\ALYac_UpdSrv /f
 REG DELETE HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\ALYac_UpdSrv /f
 
