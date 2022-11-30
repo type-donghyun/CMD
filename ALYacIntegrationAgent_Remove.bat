@@ -47,7 +47,7 @@ CHCP 949 > nul
 
 RD /s /q %ProgramFiles%\ESTsoft
 RD /s /q %ProgramData%\ESTsoft
-RD /s /q %ProgramData%\Microsoft\Windows\"Start menu"\Programs\이스트소프트
+RD /s /q %ProgramData%"\Microsoft\Windows\Start menu\Programs\이스트소프트"
 
 CHCP 65001 > nul
 COLOR 0A
@@ -64,7 +64,7 @@ ECHO ==============
 TIMEOUT /t 3 > nul
 CHCP 949 > nul
 
-DEL /s /q %ProgramData%\Microsoft\Windows\"Start menu"\알약.lnk
+DEL /s /q %ProgramData%"\Microsoft\Windows\Start menu\알약.lnk"
 
 CHCP 65001 > nul
 COLOR 0A
@@ -84,17 +84,17 @@ CHCP 949 > nul
 REG DELETE HKCR\*\shellex\ContextMenuHandlers\ALYac /f
 REG DELETE HKCR\CLSID\{22C7B543-DCDE-48F6-A226-524D67C4428D} /f
 REG DELETE HKCR\TypeLib\{6A479902-8E46-4413-A8C4-F270468C95FB} /f
-REM 	값 데이터			REG DELETE HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC /v C:\ProgramData\Microsoft\Windows\Start Menu\알약.lnk /f
-REM 	값 데이터			REG DELETE HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC /v C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe /f
-REG DELETE HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store /v C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe /f
+REM 	값 데이터			REG DELETE HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC /v "C:\ProgramData\Microsoft\Windows\Start Menu\알약.lnk" /f
+REM 	값 데이터			REG DELETE HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC /v "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" /f
+REG DELETE HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store /v C:\"Program Files"\ESTsoft\ALYac\AYCLaunch.exe /f
 REG DELETE HKLM\SOFTWARE\ESTsoft\ALYac /f
 REG DELETE HKLM\SOFTWARE\ESTsoft\ALYacIntegrationAgent /f
 REG DELETE HKLM\SOFTWARE\ESTsoft\ASM /f
 REG DELETE HKLM\SOFTWARE\ESTsoft /f
-REG DELETE HKLM\SOFTWARE\Microsoft\Security Center\Provider\Av\{5B7204C1-D426-0E58-80E9-8987FC08E2AC} /f
-REG DELETE HKLM\SOFTWARE\Microsoft\Security Center\Provider\Fw\{634985E4-9E49-0F00-ABB6-20B202DBA5D7} /f
-REG DELETE HKLM\SOFTWARE\Microsoft\Security Center\Provider\Fw\{85094255-782A-66B3-E410-0F5785E13919} /f
-REG DELETE HKLM\SOFTWARE\Microsoft\Security Center\Provider\Av\{BD32C370-3245-67EB-CF4F-A6627B327E62} /f
+REG DELETE "HKLM\SOFTWARE\Microsoft\Security Center\Provider\Av\{5B7204C1-D426-0E58-80E9-8987FC08E2AC}" /f
+REG DELETE "HKLM\SOFTWARE\Microsoft\Security Center\Provider\Fw\{634985E4-9E49-0F00-ABB6-20B202DBA5D7}" /f
+REG DELETE "HKLM\SOFTWARE\Microsoft\Security Center\Provider\Fw\{85094255-782A-66B3-E410-0F5785E13919}" /f
+REG DELETE "HKLM\SOFTWARE\Microsoft\Security Center\Provider\Av\{BD32C370-3245-67EB-CF4F-A6627B327E62}" /f
 REG DELETE HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v ALYac /f
 REG DELETE HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v ALYacIntegrationAgent /f
 REG DELETE HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\ALYac_is1 /f
