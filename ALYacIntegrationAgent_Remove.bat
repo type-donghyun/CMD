@@ -82,11 +82,16 @@ ECHO ====================
 TIMEOUT /t 2 > nul
 
 CLS
+REG QUERY "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /f "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" | FIND /i "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" >> %temp%\ALYacIntegrationAgentRemove.log
+FOR /f "tokens=1" %%a in ('type %temp%\ALYacIntegrationAgentRemove.log') do SET key1=%%a
+REG QUERY "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /f "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" | FIND /i "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" >> %temp%\ALYacIntegrationAgentRemove.log
+FOR /f "tokens=1" %%a in ('type %temp%\ALYacIntegrationAgentRemove.log') do SET key2=%%a
+
 REG DELETE "HKCR\*\shellex\ContextMenuHandlers\ALYac" /f
 REG DELETE "HKCR\CLSID\{22C7B543-DCDE-48F6-A226-524D67C4428D}" /f
 REG DELETE "HKCR\TypeLib\{6A479902-8E46-4413-A8C4-F270468C95FB}" /f
-REM 	값 데이터			REG DELETE HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /v "C:\ProgramData\Microsoft\Windows\Start Menu\알약.lnk" /f
-REM 	값 데이터			REG DELETE HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /v "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" /f
+REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /v %key1% /f
+REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /v %key2% /f
 REG DELETE "HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store" /v "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" /f
 REG DELETE "HKLM\SOFTWARE\ESTsoft\ALYac" /f
 REG DELETE "HKLM\SOFTWARE\ESTsoft\ALYacIntegrationAgent" /f
