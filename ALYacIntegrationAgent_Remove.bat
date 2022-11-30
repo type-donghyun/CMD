@@ -35,53 +35,51 @@ ECHO ====================================================
 ECHO 백그라운드에서 동작 중인 알약 프로세스를 강제로 종료
 ECHO ====================================================
 TASKKILL /im "AYCUpdSrv.ayc" /t /f 2> nul
-TIMEOUT /t 3 > nul
+TIMEOUT /t 2 > nul
 
 CLS
 COLOR 06
 ECHO ==================
 ECHO 디렉토리 제거 시작
 ECHO ==================
-TIMEOUT /t 3 > nul
+TIMEOUT /t 2 > nul
 
 CLS
 RD /s /q "%Program Files%\ESTsoft"
 RD /s /q "%ProgramData%\ESTsoft"
 RD /s /q "%ProgramData%\Microsoft\Windows\Start Menu\Programs\이스트소프트"
-PAUSE
 
 CLS
 COLOR 0A
 ECHO ==================
 ECHO 디렉토리 제거 완료
 ECHO ==================
-TIMEOUT /t 3 > nul
+TIMEOUT /t 2 > nul
 
 CLS
 COLOR 06
 ECHO ==============
 ECHO 파일 제거 시작
 ECHO ==============
-TIMEOUT /t 3 > nul
+TIMEOUT /t 2 > nul
 
 CLS
 DEL /s /q "%ProgramData%\Microsoft\Windows\Start menu\알약.lnk"
 DEL /s /q "%UserProfile%\Desktop\알약.lnk"
-PAUSE
 
 CLS
 COLOR 0A
 ECHO ==============
 ECHO 파일 제거 완료
 ECHO ==============
-TIMEOUT /t 3 > nul
+TIMEOUT /t 2 > nul
 
 CLS
 COLOR 06
 ECHO ====================
 ECHO 레지스트리 제거 시작
 ECHO ====================
-TIMEOUT /t 3 > nul
+TIMEOUT /t 2 > nul
 
 CLS
 REG DELETE "HKCR\*\shellex\ContextMenuHandlers\ALYac" /f
@@ -148,8 +146,9 @@ COLOR 0A
 ECHO ====================
 ECHO 레지스트리 제거 완료
 ECHO ====================
-TIMEOUT /t 3 > nul
+TIMEOUT /t 2 > nul
 
+COLOR 07
 :End
 CLS
 BCDEDIT /deletevalue {current} safeboot > nul
