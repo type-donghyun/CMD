@@ -34,7 +34,7 @@ COLOR 04
 ECHO ====================================================
 ECHO 백그라운드에서 동작 중인 알약 프로세스를 강제로 종료
 ECHO ====================================================
-TASKKILL /im "AYCUpdSrv.ayc" /t /f 2> nul
+TASKKILL /im AYCUpdSrv.ayc /t /f 2> nul
 TIMEOUT /t 3 > nul
 
 CLS
@@ -44,9 +44,11 @@ ECHO 디렉토리 제거 시작
 ECHO ==================
 TIMEOUT /t 3 > nul
 
-RD /s /q %ProgramFiles%\ESTsoft 2> nul
-RD /s /q %ProgramData%\ESTsoft 2> nul
-RD /s /q %ProgramData%\Microsoft\Windows\"Start Menu"\Programs\이스트소프트
+CLS
+RD /s /q "C:\Program Files\ESTsoft"
+RD /s /q %ProgramData%\ESTsoft
+RD /s /q %ProgramData%"\Microsoft\Windows\Start Menu\Programs\이스트소프트"
+PAUSE
 
 CLS
 COLOR 0A
@@ -63,8 +65,9 @@ ECHO ==============
 TIMEOUT /t 3 > nul
 
 CLS
-DEL /s /q %ProgramData%\Microsoft\Windows\"Start menu"\알약.lnk
+DEL /s /q %ProgramData%"\Microsoft\Windows\Start menu\알약.lnk"
 DEL /s /q %UserProfile%\Desktop\알약.lnk
+PAUSE
 
 CLS
 COLOR 0A
