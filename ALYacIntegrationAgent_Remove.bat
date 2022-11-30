@@ -34,59 +34,59 @@ COLOR 04
 ECHO ====================================================
 ECHO 백그라운드에서 동작 중인 알약 프로세스를 강제로 종료
 ECHO ====================================================
-REM TASKKILL /im "" /t /f
+TASKKILL /im "AYCUpdSrv.ayc" /t /f 2> nul
 TIMEOUT /t 3 > nul
 
-
+CLS
 COLOR 06
 ECHO ==================
 ECHO 디렉토리 제거 시작
 ECHO ==================
 TIMEOUT /t 3 > nul
-CHCP 949 > nul
 
-RD /s /q %ProgramFiles%\ESTsoft
-RD /s /q %ProgramData%\ESTsoft
-RD /s /q %ProgramData%"\Microsoft\Windows\Start menu\Programs\이스트소프트"
+RD /s /q %ProgramFiles%\ESTsoft 2> nul
+RD /s /q %ProgramData%\ESTsoft 2> nul
+RD /s /q %ProgramData%\Microsoft\Windows\"Start Menu"\Programs\이스트소프트
 
-CHCP 65001 > nul
+CLS
 COLOR 0A
 ECHO ==================
 ECHO 디렉토리 제거 완료
 ECHO ==================
 TIMEOUT /t 3 > nul
-CLS
 
+CLS
 COLOR 06
 ECHO ==============
 ECHO 파일 제거 시작
 ECHO ==============
 TIMEOUT /t 3 > nul
-CHCP 949 > nul
 
-DEL /s /q %ProgramData%"\Microsoft\Windows\Start menu\알약.lnk"
+CLS
+DEL /s /q %ProgramData%\Microsoft\Windows\"Start menu"\알약.lnk
+DEL /s /q %UserProfile%\Desktop\알약.lnk
 
-CHCP 65001 > nul
+CLS
 COLOR 0A
 ECHO ==============
 ECHO 파일 제거 완료
 ECHO ==============
 TIMEOUT /t 3 > nul
-CLS
 
+CLS
 COLOR 06
 ECHO ====================
 ECHO 레지스트리 제거 시작
 ECHO ====================
 TIMEOUT /t 3 > nul
-CHCP 949 > nul
 
+CLS
 REG DELETE HKCR\*\shellex\ContextMenuHandlers\ALYac /f
 REG DELETE HKCR\CLSID\{22C7B543-DCDE-48F6-A226-524D67C4428D} /f
 REG DELETE HKCR\TypeLib\{6A479902-8E46-4413-A8C4-F270468C95FB} /f
 REM 	값 데이터			REG DELETE HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC /v "C:\ProgramData\Microsoft\Windows\Start Menu\알약.lnk" /f
 REM 	값 데이터			REG DELETE HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC /v "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" /f
-REG DELETE HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store /v C:\"Program Files"\ESTsoft\ALYac\AYCLaunch.exe /f
+REG DELETE "HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store" /v "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" /f
 REG DELETE HKLM\SOFTWARE\ESTsoft\ALYac /f
 REG DELETE HKLM\SOFTWARE\ESTsoft\ALYacIntegrationAgent /f
 REG DELETE HKLM\SOFTWARE\ESTsoft\ASM /f
@@ -140,7 +140,7 @@ REG DELETE HKLM\SYSTEM\ControlSet001\Services\trufos /f
 REG DELETE HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\ALYac_UpdSrv /f
 REG DELETE HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\ALYac_UpdSrv /f
 
-CHCP 65001 > nul
+CLS
 COLOR 0A
 ECHO ====================
 ECHO 레지스트리 제거 완료
@@ -153,3 +153,4 @@ ECHO 작업을 종료합니다.
 BCDEDIT /deletevalue {current} safeboot > nul
 TIMEOUT /t 3 > nul
 SHUTDOWN /r /t 5 /c "안전모드 해제 후, 다시 시작합니다." /f
+DEL /s /q %UserProfile%\desktop\"저를 실행해주세요!".bat 2> nul
