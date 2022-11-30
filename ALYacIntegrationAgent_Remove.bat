@@ -91,8 +91,8 @@ DEL /s /q "%temp%\ALYacIntegrationAgentRemove.log"
 REG DELETE "HKCR\*\shellex\ContextMenuHandlers\ALYac" /f
 REG DELETE "HKCR\CLSID\{22C7B543-DCDE-48F6-A226-524D67C4428D}" /f
 REG DELETE "HKCR\TypeLib\{6A479902-8E46-4413-A8C4-F270468C95FB}" /f
-REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /v %key1% /f
-REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /v %key2% /f
+REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /v "%key1%" /f
+REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\UFH\SHC" /v "%key2%" /f
 REG DELETE "HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store" /v "C:\Program Files\ESTsoft\ALYac\AYCLaunch.exe" /f
 REG DELETE "HKLM\SOFTWARE\ESTsoft\ALYac" /f
 REG DELETE "HKLM\SOFTWARE\ESTsoft\ALYacIntegrationAgent" /f
