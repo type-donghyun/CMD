@@ -24,15 +24,35 @@ IF /i "%~1"=="-el" SET _elev=1
 FOR /f "tokens=6 delims=[]. " %%G in ('ver') do set winbuild=%%G
 SET "_null=1>nul 2>nul"
 SET "_psc=powershell"
-SET "EchoRed=%_psc% write-host -back Black -fore Red"
-SET "EchoGreen=%_psc% write-host -back Black -fore Green"
+SET "EchoBlack=%_psc% write-host -back DarkGray -fore Black"
+SET "EchoBlue=%_psc% write-host -back Black -fore DarkBlue"
+SET "EchoGreen=%_psc% write-host -back Black -fore Darkgreen"
+SET "EchoCyan=%_psc% write-host -back Black -fore DarkCyan"
+SET "EchoRed=%_psc% write-host -back Black -fore DarkRed"
+SET "EchoPurple=%_psc% write-host -back Black -fore DarkMagenta"
+SET "EchoYellow=%_psc% write-host -back Black -fore DarkYellow"
+SET "EchoWhite=%_psc% write-host -back Black -fore Gray"
+SET "EchoGray=%_psc% write-host -back Black -fore DarkGray"
+SET "EchoLightBlue=%_psc% write-host -back Black -fore Blue"
+SET "EchoLightGreen=%_psc% write-host -back Black -fore Green"
+SET "EchoLightCyan=%_psc% write-host -back Black -fore Cyan"
+SET "EchoLightRed=%_psc% write-host -back Black -fore Red"
+SET "EchoLightPurple=%_psc% write-host -back Black -fore Magenta"
+SET "EchoLightYellow=%_psc% write-host -back Black -fore Yellow"
+SET "EchoBrightWhite=%_psc% write-host -back Black -fore White"
 SET "ErrLine=echo: & %EchoRed% ==== ERROR ==== &echo:"
 ::====================================================================================================
 
 CHCP 65001 > nul
 
+TITLE Office 365 설치
 ECHO Office 365 설치
-%echogreen% 포함된 제품은 Excel, Word, Powerpoint입니다.
+ECHO.
+%echoblack% 포함된 제품
+%echogreen% Excel
+%echolightblue% Word
+%echolightred% Powerpoint
+ECHO.
 ECHO 설치에는 인터넷 연결이 필요하며 시간이 다소 소요될 수 있습니다.
 ECHO 10초 후, 설치가 시작됩니다.
 TIMEOUT /t 10 > nul
