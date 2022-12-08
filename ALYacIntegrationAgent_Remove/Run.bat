@@ -40,15 +40,15 @@ SET "EchoLightRed=%_psc% write-host -back Black -fore Red"
 SET "EchoLightPurple=%_psc% write-host -back Black -fore Magenta"
 SET "EchoLightYellow=%_psc% write-host -back Black -fore Yellow"
 SET "EchoBrightWhite=%_psc% write-host -back Black -fore White"
+SET "EchoWarning=%_psc% write-host -back DarkGray -fore DarkRed"
 SET "ErrLine=echo: & %EchoRed% ==== ERROR ==== &echo:"
 ::====================================================================================================
 
 CHCP 65001 > nul
 
-:loop
 ECHO 알약 통합에이전트 제거를 위해 안전모드로 다시 시작해야합니다.
 ECHO 다시 시작 시, 실행되고 있는 모든 프로그램이 강제로 종료됩니다.
-%echoblack% 다시 시작 후, 바탕 화면의 '저를 실행해주세요!'를 실행해주세요.
+%echowarning% 다시 시작 후, 바탕 화면의 [저를 실행해주세요!]를 실행해주세요.
 ECHO 안전모드로 변경 후 다시 시작하시겠습니까?
 CHOICE
 
