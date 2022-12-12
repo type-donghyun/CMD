@@ -1,4 +1,5 @@
 @ECHO OFF
+::================================================================================관리자 권한 요청
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 IF %errorlevel% neq 0 (
 	GOTO UACPrompt
@@ -15,12 +16,39 @@ IF %errorlevel% neq 0 (
 :gotAdmin
 PUSHD "%CD%"
 	CD /d "%~dp0"
+::====================================================================================================
+
+::================================================================================ECHO 색상 설정
+SET _elev=
+IF /i "%~1"=="-el" SET _elev=1
+FOR /f "tokens=6 delims=[]. " %%G in ('ver') do set winbuild=%%G
+SET "_null=1>nul 2>nul"
+SET "_psc=powershell"
+SET "EchoBlack=%_psc% write-host -back DarkGray -fore Black"
+SET "EchoBlue=%_psc% write-host -back Black -fore DarkBlue"
+SET "EchoGreen=%_psc% write-host -back Black -fore Darkgreen"
+SET "EchoCyan=%_psc% write-host -back Black -fore DarkCyan"
+SET "EchoRed=%_psc% write-host -back Black -fore DarkRed"
+SET "EchoPurple=%_psc% write-host -back Black -fore DarkMagenta"
+SET "EchoYellow=%_psc% write-host -back Black -fore DarkYellow"
+SET "EchoWhite=%_psc% write-host -back Black -fore Gray"
+SET "EchoGray=%_psc% write-host -back Black -fore DarkGray"
+SET "EchoLightBlue=%_psc% write-host -back Black -fore Blue"
+SET "EchoLightGreen=%_psc% write-host -back Black -fore Green"
+SET "EchoLightCyan=%_psc% write-host -back Black -fore Cyan"
+SET "EchoLightRed=%_psc% write-host -back Black -fore Red"
+SET "EchoLightPurple=%_psc% write-host -back Black -fore Magenta"
+SET "EchoLightYellow=%_psc% write-host -back Black -fore Yellow"
+SET "EchoBrightWhite=%_psc% write-host -back Black -fore White"
+SET "EchoWarning=%_psc% write-host -back DarkGray -fore DarkRed"
+SET "ErrLine=echo: & %EchoRed% ==== ERROR ==== &echo:"
+::====================================================================================================
 
 CHCP 65001 > nul
 
-ECHO 알약 통합에이전트 제거를 위한 작업입니다.
-ECHO Uninstall 권한이 없어 프로그램 파일과 레지스트리를 직접 제거합니다.
-ECHO 제거를 진행하시겠습니까?
+%echobrightwhite% 알약 통합에이전트 제거를 위한 작업입니다.
+%echobrightwhite% Uninstall 권한이 없어 프로그램 파일과 레지스트리를 직접 제거합니다.
+%echoyellow% 제거를 진행하시겠습니까?
 CHOICE
 
 IF %errorlevel% equ 1 (
@@ -30,17 +58,15 @@ IF %errorlevel% equ 1 (
 	GOTO End
 )
 
-COLOR 04
 ECHO ====================================================
-ECHO 백그라운드에서 동작 중인 알약 프로세스를 강제로 종료
+%echored% 백그라운드에서 동작 중인 알약 프로세스를 강제로 종료
 ECHO ====================================================
 TASKKILL /im "AYCUpdSrv.ayc" /t /f 2> nul
 TIMEOUT /t 2 > nul
 
 CLS
-COLOR 06
 ECHO ==================
-ECHO 디렉토리 제거 시작
+%echoyellow% 디렉토리 제거 시작
 ECHO ==================
 TIMEOUT /t 2 > nul
 
@@ -50,16 +76,14 @@ RD /s /q "%ProgramData%\ESTsoft"
 RD /s /q "%ProgramData%\Microsoft\Windows\Start Menu\Programs\이스트소프트"
 
 CLS
-COLOR 0A
 ECHO ==================
-ECHO 디렉토리 제거 완료
+%echogreen% 디렉토리 제거 완료
 ECHO ==================
 TIMEOUT /t 2 > nul
 
 CLS
-COLOR 06
 ECHO ==============
-ECHO 파일 제거 시작
+%echoyellow% 파일 제거 시작
 ECHO ==============
 TIMEOUT /t 2 > nul
 
@@ -68,16 +92,14 @@ DEL /s /q "%ProgramData%\Microsoft\Windows\Start menu\알약.lnk"
 DEL /s /q "%UserProfile%\Desktop\알약.lnk"
 
 CLS
-COLOR 0A
 ECHO ==============
-ECHO 파일 제거 완료
+%echogreen% 파일 제거 완료
 ECHO ==============
 TIMEOUT /t 2 > nul
 
 CLS
-COLOR 06
 ECHO ====================
-ECHO 레지스트리 제거 시작
+%echoyellow% 레지스트리 제거 시작
 ECHO ====================
 TIMEOUT /t 2 > nul
 
@@ -148,13 +170,11 @@ REG DELETE "HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\ALYac_UpdSrv"
 REG DELETE "HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\ALYac_UpdSrv" /f
 
 CLS
-COLOR 0A
 ECHO ====================
-ECHO 레지스트리 제거 완료
+%echogreen% 레지스트리 제거 완료
 ECHO ====================
 TIMEOUT /t 2 > nul
 
-COLOR 07
 :End
 CLS
 BCDEDIT /deletevalue {current} safeboot > nul
