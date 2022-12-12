@@ -43,34 +43,48 @@ SET "EchoBrightWhite=%_psc% write-host -back Black -fore White"
 SET "ErrLine=echo: & %EchoRed% ==== ERROR ==== &echo:"
 ::====================================================================================================
 
-CHCP 65001 > nul
-
 FOR /f "tokens=4-6" %%a in ('systeminfo') do (
 	IF %%a==Windows (
-		ECHO %%a %%b %%c> %temp%\test.txt
+		SET version=%%b
+		SET edition=%%c
 	)
 )
 
-SET /p a= < %temp%\test.txt
+CHCP 65001 > nul
 
-IF  "%a%" == "Windows 10 Pro" (
-	%echogreen% Windows 10 Pro가 감지되었습니다.
-	SLMGR /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
-) ELSE IF "%a%" == "Windows 10 Home" (
-	%echogreen% Windows 10 Home이 감지되었습니다.
-	SLMGR /ipk TX9XD-98N7V-6WMQ6-BX7FG-H8Q99
+IF "%version%" == "10" (
+	GOTO :dowork
+) ELSE IF "%version%" == "11" (
+	GOTO :dowork
 ) ELSE (
-	%echored% 불가능한 Windows 버전: %a%
+	%echored% Windows 버전이 10/11이 아닙니다.
 	ECHO 작업을 종료합니다.
-	TIMEOUT /t 3 > nul
 	GOTO :workend
 )
 
+:dowork
+IF "%edition%" == "Pro" (
+	%echoyellow% Windows %version% %edition%가 감지되었습니다.
+	SLMGR /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
+) ELSE IF "%edition%" == "Home" (
+	%echoyellow% Windows %version% %edition%이 감지되었습니다.
+	SLMGR /ipk TX9XD-98N7V-6WMQ6-BX7FG-H8Q99
+) ELSE (
+	%echored% 불명확한 Windows 버전입니다: %edition%
+	ECHO 작업을 종료합니다.
+	GOTO :workend
+)
+
+CLS
+ECHO 정품 활성화를 진행중입니다.
 SLMGR /skms kms.digiboy.ir
 SLMGR /ato
 SLMGR /xpr
 SLMGR /dlv
 
+CLS
+%echogreen% Windows 정품이 활성화되었습니다.
+
 :workend
-DEL %temp%\test.txt
+TIMEOUT /t 3 > nul
 EXIT /b
