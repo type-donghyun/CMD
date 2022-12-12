@@ -48,8 +48,8 @@ CHCP 65001 > nul
 %echogreen% Windows 10 Pro 정품 활성화 중...
 ECHO 정품 인증은 6개월 후, 만료됩니다.
 
-SLMGR /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX > nul
-SLMGR /skms kms.digiboy.ir > nul
-SLMGR /ato > nul
-SLMGR /xpr > nul
-SLMGR /dlv > nul
+SLMGR /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
+SLMGR /skms kms.digiboy.ir
+SLMGR /ato
+SLMGR /xpr
+SLMGR /dlv
