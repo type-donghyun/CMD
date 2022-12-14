@@ -11,7 +11,7 @@ IF %errorlevel% neq 0 (
 	SET params = %*:"=""
 	ECHO UAC.ShellExecute "cmd.exe", "/c %~s0 %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 	"%temp%\getadmin.vbs"
-	REM DEL "%temp%\getadmin.vbs"
+	DEL "%temp%\getadmin.vbs"
 	EXIT /b
 :gotAdmin
 PUSHD "%CD%"
@@ -54,13 +54,15 @@ ECHO.
 %echolightred% Powerpoint
 ECHO.
 ECHO 설치에는 인터넷 연결이 필요하며 시간이 다소 소요될 수 있습니다.
-ECHO 10초 후, 설치가 시작됩니다.
-TIMEOUT /t 10 > nul
+CHOICE /c 12 /n /t 3 /d 2 /m "설치를 진행하시겠습니까? [1] Yes, [2] No"
 
-CLS
-CD data > nul
-ECHO 설치 파일 다운로드 중...
-setup.exe /download configuration.xml
-CLS
-ECHO 설치 진행 중...
-setup.exe /configure configuration.xml
+IF %errorlevel% equ 1 (
+	CLS
+	CD data > nul
+	ECHO 설치 파일 다운로드 중...
+	setup.exe /download configuration.xml
+
+	CLS
+	ECHO 설치 진행 중...
+	setup.exe /configure configuration.xml
+)
