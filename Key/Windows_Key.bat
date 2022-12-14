@@ -97,4 +97,3 @@ IF %errorlevel% equ 1 (
 :workend
 ECHO 작업을 종료합니다.
 TIMEOUT /t 3 > nul
-EXIT /b
