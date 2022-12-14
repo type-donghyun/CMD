@@ -44,7 +44,7 @@ SET "ErrLine=echo: & %EchoRed% ==== ERROR ==== &echo:"
 ::====================================================================================================
 
 FOR /f "tokens=4-6" %%a in ('systeminfo') do (
-	IF %%a==Windows (
+	IF "%%a" equ "Windows" (
 		SET OSname=%%a
 		SET version=%%b
 		SET edition=%%c
@@ -53,33 +53,31 @@ FOR /f "tokens=4-6" %%a in ('systeminfo') do (
 
 CHCP 65001 > nul
 
-IF "%OSname%" == "Windows" (
+IF "%OSname%" equ "Windows" (
 	GOTO :dowork
 ) ELSE (
 	%echored% 운영체제가 Windows가 아닙니다.
 	GOTO :workend
 )
 
-IF "%version%" == "10" (
+IF "%version%" equ "10" (
 	GOTO :dowork
-) ELSE IF "%version%" == "11" (
+) ELSE IF "%version%" equ "11" (
 	GOTO :dowork
 ) ELSE (
 	%echored% Windows 버전이 10/11이 아닙니다.
-	ECHO 작업을 종료합니다.
 	GOTO :workend
 )
 
 :dowork
-IF "%edition%" == "Pro" (
+IF "%edition%" equ "Pro" (
 	%echoyellow% Windows %version% %edition%가 감지되었습니다.
 	SLMGR /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
-) ELSE IF "%edition%" == "Home" (
+) ELSE IF "%edition%" equ "Home" (
 	%echoyellow% Windows %version% %edition%이 감지되었습니다.
 	SLMGR /ipk TX9XD-98N7V-6WMQ6-BX7FG-H8Q99
 ) ELSE (
 	%echored% 활성화할 수 없는 Windows 버전입니다: %edition%
-	ECHO 작업을 종료합니다.
 	GOTO :workend
 )
 
@@ -90,11 +88,13 @@ CLS
 %echogreen% Windows 정품이 활성화되었습니다.
 CHOICE /c 12 /n /t 3 /d 2 /m "라이센스 정보와 만료 날짜를 확인하시겠습니까? [1] Yes, [2] No"
 
+CLS
 IF %errorlevel% equ 1 (
 	SLMGR /xpr
 	SLMGR /dlv
 )
 
 :workend
+ECHO 작업을 종료합니다.
 TIMEOUT /t 3 > nul
 EXIT /b
