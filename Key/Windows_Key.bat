@@ -11,7 +11,7 @@ IF %errorlevel% neq 0 (
 	SET params = %*:"=""
 	ECHO UAC.ShellExecute "cmd.exe", "/c %~s0 %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 	"%temp%\getadmin.vbs"
-	REM DEL "%temp%\getadmin.vbs"
+	DEL "%temp%\getadmin.vbs"
 	EXIT /b
 :gotAdmin
 PUSHD "%CD%"
@@ -45,12 +45,20 @@ SET "ErrLine=echo: & %EchoRed% ==== ERROR ==== &echo:"
 
 FOR /f "tokens=4-6" %%a in ('systeminfo') do (
 	IF %%a==Windows (
+		SET OSname=%%a
 		SET version=%%b
 		SET edition=%%c
 	)
 )
 
 CHCP 65001 > nul
+
+IF "%OSname%" == "Windows" (
+	GOTO :dowork
+) ELSE (
+	%echored% 운영체제가 Windows가 아닙니다.
+	GOTO :workend
+)
 
 IF "%version%" == "10" (
 	GOTO :dowork
@@ -70,20 +78,22 @@ IF "%edition%" == "Pro" (
 	%echoyellow% Windows %version% %edition%이 감지되었습니다.
 	SLMGR /ipk TX9XD-98N7V-6WMQ6-BX7FG-H8Q99
 ) ELSE (
-	%echored% 불명확한 Windows 버전입니다: %edition%
+	%echored% 활성화할 수 없는 Windows 버전입니다: %edition%
 	ECHO 작업을 종료합니다.
 	GOTO :workend
 )
 
-CLS
-ECHO 정품 활성화를 진행중입니다.
 SLMGR /skms kms.digiboy.ir
 SLMGR /ato
-SLMGR /xpr
-SLMGR /dlv
 
 CLS
 %echogreen% Windows 정품이 활성화되었습니다.
+CHOICE /c 12 /n /t 3 /d 2 /m "라이센스 정보와 만료 날짜를 확인하시겠습니까? [1] Yes, [2] No"
+
+IF %errorlevel% equ 1 (
+	SLMGR /xpr
+	SLMGR /dlv
+)
 
 :workend
 TIMEOUT /t 3 > nul
