@@ -11,7 +11,7 @@ IF %errorlevel% neq 0 (
 	SET params = %*:"=""
 	ECHO UAC.ShellExecute "cmd.exe", "/c %~s0 %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 	"%temp%\getadmin.vbs"
-	REM DEL "%temp%\getadmin.vbs"
+	DEL "%temp%\getadmin.vbs"
 	EXIT /b
 :gotAdmin
 PUSHD "%CD%"
@@ -40,21 +40,18 @@ SET "EchoLightRed=%_psc% write-host -back Black -fore Red"
 SET "EchoLightPurple=%_psc% write-host -back Black -fore Magenta"
 SET "EchoLightYellow=%_psc% write-host -back Black -fore Yellow"
 SET "EchoBrightWhite=%_psc% write-host -back Black -fore White"
-SET "EchoWarning=%_psc% write-host -back DarkGray -fore DarkRed"
 SET "ErrLine=echo: & %EchoRed% ==== ERROR ==== &echo:"
 ::====================================================================================================
 
 CHCP 65001 > nul
 
-%echobrightwhite% 알약 통합에이전트 제거를 위한 작업입니다.
-%echobrightwhite% Uninstall 권한이 없어 프로그램 파일과 레지스트리를 직접 제거합니다.
-%echoyellow% 제거를 진행하시겠습니까?
-CHOICE
+ECHO 알약 통합에이전트 제거를 위한 작업입니다.
+ECHO Uninstall 권한이 없어 프로그램 파일과 레지스트리를 직접 제거합니다.
+CHOICE /c 12 /n /t 3 /d 2 /m "제거를 진행하시겠습니까? [1] Yes, [2] No"
 
 IF %errorlevel% equ 1 (
 	CLS
 ) ELSE IF %errorlevel% equ 2 (
-	COLOR 04
 	GOTO End
 )
 
